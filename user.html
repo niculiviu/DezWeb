@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
     <title>Rezervari ASMI</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/taskman.css" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet" type="text/css">
 </head>
@@ -36,19 +36,93 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit" ng-click="addProject(name,description,1)" style="width:100%;"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Project</button>
+                                <button class="btn btn-default" type="submit" ng-click="addProject(name,description,1)" style="width:100%;"><i class="glyphicon glyphicon-plus"></i>&nbsp;Adauga Proiect</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            <div class="task">
-                <label class="checkbox" ng-repeat="project in projects">
+            <div class="task" ng-repeat="project in projects">
+                <label class="checkbox">
 
-                    <span ng-class="{strike:task.STATUS==2}"><h4><Small>[{{project.ID}}]</Small>{{project.name}} <small>{{project.description}}</small> <a ng-click="deleteTask(project.ID)" class="pull-right"><i class="glyphicon glyphicon-trash"></i></a></h4></span>
-                   
+                    <span ng-class="{strike:task.STATUS==2}"><h4><small>[{{project.ID}}]</small>{{project.name}} <small>{{project.description}}</small> <a ng-click="deleteTask(project.ID)" class="pull-right"><i class="glyphicon glyphicon-trash"></i></a></h4></span>
+
                 </label>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form id="newTableForm" class="add-task">
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="TableName" ng-model="TableName" placeholder="Titlu Masa" ng-focus="addNewClicked">
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit" ng-click="addTable(project.ID,TableName)" style="width:100%;"><i class="glyphicon glyphicon-plus"></i>&nbsp;Adauga Masa</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Mese</div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Nume Masa</th>
+                                            <th style="width:10%;">Sterge</th>
+                                            <th style="width:10%;">Adauga</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="table in tables" ng-if="table.projectID==project.ID">
+                                        <td>{{table.name}}</td>
+                                        <td><button class="btn btn-danger btn-sm">Sterge</button></td>
+                                        <td><button class="btn btn-primary btn-sm" ng-click="addRezervation(table.ID,table.name,project.ID)">Adauga la Rezervari</button></td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Rezervari</div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Nume Masa</th>
+                                            <th>e-mail</th>
+                                            <th>Telefon</th>
+                                            <th>Data</th>
+                                            <th>Status</th>
+                                            <th>Rezerva</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="rezervation in rezervations" ng-if="rezervation.projectID==project.ID" ng-class="{ 'danger' : rezervation.status == 'Nerezervat' }">
+                                        <td>{{rezervation.tableName}}</td>
+                                        <td>{{rezervation.email}}</td>
+                                        <td>{{rezervation.telephone}}</td>
+                                        <td>{{rezervation.c_date}}</td>
+                                        <td>{{rezervation.status}}</td>
+                                        <td><button class="btn btn-primary btn-sm">Rezerva</button></td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </div>
 

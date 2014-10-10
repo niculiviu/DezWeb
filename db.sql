@@ -27,11 +27,13 @@ CREATE TABLE `tables` (
 CREATE TABLE `rezervation` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `tableID` int(11),
+  `projectID` int(11),
+  `tableName` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
   `c_data` date NOT NULL,
   `start_hour` int(11) NOT NULL,
   `end_hour` int(11) NOT NULL,
-  `status` varchar(255) DEFAULT 'No',
+  `status` varchar(255) DEFAULT 'Nerezervat',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
