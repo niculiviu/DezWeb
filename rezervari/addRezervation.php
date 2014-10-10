@@ -14,5 +14,12 @@ $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 $result = $mysqli->affected_rows;
 
 echo $json_response = json_encode($result);
+
+$query2="update tables set blocked='1' where ID='$tableID'";
+$result2 = $mysqli->query($query2) or die($mysqli->error.__LINE__);
+
+$result2 = $mysqli->affected_rows;
+
+echo $json_response2 = json_encode($result2);
 }
 ?>

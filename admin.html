@@ -45,7 +45,7 @@
             <div class="task" ng-repeat="project in projects">
                 <label class="checkbox">
 
-                    <span ng-class="{strike:task.STATUS==2}"><h4><small>[{{project.ID}}]</small>{{project.name}} <small>{{project.description}}</small> <a ng-click="deleteTask(project.ID)" class="pull-right"><i class="glyphicon glyphicon-trash"></i></a></h4></span>
+                    <span ng-class="{strike:task.STATUS==2}"><h4>{{project.name}} <small>{{project.description}}</small> <a ng-click="deleteTask(project.ID)" class="pull-right"><i class="glyphicon glyphicon-trash"></i></a></h4></span>
 
                 </label>
                 <div class="row">
@@ -84,8 +84,8 @@
                                     </thead>
                                     <tr ng-repeat="table in tables" ng-if="table.projectID==project.ID">
                                         <td>{{table.name}}</td>
-                                        <td><button class="btn btn-danger btn-sm">Sterge</button></td>
-                                        <td><button class="btn btn-primary btn-sm" ng-click="addRezervation(table.ID,table.name,project.ID)">Adauga la Rezervari</button></td>
+                                        <td><button class="btn btn-danger btn-sm" ng-class="{ 'disabled' : table.blocked == '1' }"><span class="glyphicon glyphicon-trash"></span> Sterge</button></td>
+                                        <td><button class="btn btn-primary btn-sm" ng-click="addRezervation(table.ID,table.name,project.ID)" ng-class="{ 'disabled' : table.blocked == '1' }">Adauga la Rezervari <span class="glyphicon glyphicon-chevron-right"></span></button></td>
                                     </tr>
                                     
                                 </table>
@@ -104,7 +104,7 @@
                                             <th>Telefon</th>
                                             <th>Data</th>
                                             <th>Status</th>
-                                            <th>Rezerva</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tr ng-repeat="rezervation in rezervations" ng-if="rezervation.projectID==project.ID" ng-class="{ 'danger' : rezervation.status == 'Nerezervat' }">
@@ -113,7 +113,39 @@
                                         <td>{{rezervation.telephone}}</td>
                                         <td>{{rezervation.c_date}}</td>
                                         <td>{{rezervation.status}}</td>
-                                        <td><button class="btn btn-primary btn-sm">Rezerva</button></td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm" ng-class="{ 'disabled' : rezervation.status == 'Nerezervat' }" ng-click="confirmare(rezervation.ID)"><span class="glyphicon glyphicon-ok"></span></button>
+                                            <button class="btn btn-primary btn-sm" ng-class="{ 'disabled' : rezervation.status != 'Nerezervat' }" data-toggle="modal" data-target="#Rezervari_{{rezervation.ID}}"><span class="glyphicon glyphicon-edit"></span></button>
+                                            <button class="btn btn-danger btn-sm" ng-class="{ 'disabled' : rezervation.status != 'Nerezervat' }"><span class="glyphicon glyphicon-trash"></span></button>
+                                            <div class="modal fade" id="Rezervari_{{rezervation.ID}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">{{rezervation.tableName}}</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form role="form">
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1">Email</label>
+                                                                    <input type="email" class="form-control" id="" placeholder="Enter email" ng-model="RezervareEmail">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputPassword1">Telefon</label>
+                                                                    <input type="text" class="form-control" placeholder="Telefon" ng-model="RezervareTelefon">
+                                                                </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">M-am razgandit</button>
+                                                            <button type="submit" class="btn btn-primary" ng-click="AdaugaRezervare(RezervareEmail,RezervareTelefon,rezervation.ID,'In Asteptare',rezervation.tableID)">Trimite</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
                                     </tr>
                                     
                                 </table>
@@ -127,6 +159,9 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
 </body>
 </html>

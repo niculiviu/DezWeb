@@ -21,6 +21,7 @@ CREATE TABLE `tables` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `projectID` int(11),
   `name` varchar(255) NOT NULL,
+  `blocked` varchar(255) DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
