@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Rezervari ASMI</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/taskman.css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="widget-box" id="recent-box" ng-controller="projectController">
+        <div class="widget-header header-color-blue">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4 class="bigger lighter">
+                        <i class="glyphicon glyphicon-align-justify"></i>&nbsp;
+                        REZERVARI ASMI
+                    </h4>
+                </div>
+
+                <div class="col-sm-6" align="right">
+
+                    <button ng-click="addNewClicked=!addNewClicked;" class="btn btn-sm btn-danger header-elements-margin"><i class="glyphicon  glyphicon-plus"></i>&nbsp;Add New Project</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="widget-body ">
+            <form ng-init="addNewClicked=false; " ng-if="addNewClicked" id="newTaskForm" class="add-task">
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" ng-model="name" placeholder="Project Name" ng-focus="addNewClicked">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="description" ng-model="description" placeholder="Project Description" ng-focus="addNewClicked">
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit" ng-click="addProject(name,description,1)" style="width:100%;"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="task">
+                <label class="checkbox" ng-repeat="project in projects">
+
+                    <span ng-class="{strike:task.STATUS==2}"><h4><Small>[{{project.ID}}]</Small>{{project.name}} <small>{{project.description}}</small> <a ng-click="deleteTask(project.ID)" class="pull-right"><i class="glyphicon glyphicon-trash"></i></a></h4></span>
+                   
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>

@@ -10,10 +10,9 @@ if(isset($_POST['submit'])){
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
-	
 	if($user->login($username,$password)){ 
 
-		header('Location: memberpage.php');
+		header('Location: memberpage.php?id='.$_POST['username']);
 		exit;
 	
 	} else {
